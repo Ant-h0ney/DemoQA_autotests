@@ -62,7 +62,9 @@ def test_fill_successful_form():
     browser.element('#userNumber').should(be.blank).type(phone_number)
 
     # воркэраунд, описанный при выполнении дз со(*) на первом уроке.
+    # симуляция нажатия по полю, выделение всего содержимого (ctrl+a), очистка (backspace)
     # browser.element('#dateOfBirthInput').send_keys(Keys.CONTROL, 'a').type('28 Mar 1995').press_enter()
+
     # через JS, думаю тоже можно довести до ума, чтобы дата не откатывалась к значению по умолчанию
     # browser.execute_script(f"document.getElementById('dateOfBirthInput').value = '{birthday}'")
     browser.element('#dateOfBirthInput').click()
