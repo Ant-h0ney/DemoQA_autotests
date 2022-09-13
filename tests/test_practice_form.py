@@ -17,6 +17,7 @@ hobbies = ['Sports', 'rEaDiNG']  # Sports/Reading/Music
 address = 'bigadress a lot of letters inside string'
 state = 'Haryana'
 city = 'Karnal'
+filepath = 'photo.jpg'
 # В идеале сделать самоопределение штата, при выборе корректного города
 #     [{'state': 'NCR', 'city': ['Delhi', 'Guargon', 'Noida']},
 #     {'state': 'Uttar Pradesh', 'city': ['Agra', 'Lucknow', 'Merrut']},
@@ -53,7 +54,7 @@ def hobbies_checkbox():
 
 
 def test_fill_successful_form():
-    # browser.config.hold_browser_open = True
+    browser.config.hold_browser_open = True
     browser.open('https://demoqa.com/automation-practice-form')
     browser.element('#firstName').should(be.blank).type(name)
     browser.element('#lastName').should(be.blank).type(surname)
@@ -73,7 +74,7 @@ def test_fill_successful_form():
     # Требуется доработка, для дней рождения 1,2,3 чисел (st, nd, rd)
     browser.element(f'[aria-label$="{month} {day}th, {year}"]').click()
 
-    browser.element('#uploadPicture').send_keys(os.getcwd()+'./photo.jpg')
+    browser.element('#uploadPicture').send_keys(os.getcwd()+f'./{filepath}')
     for subject in subjects:
         browser.element('#subjectsInput').click().type(f'{subject}').press_enter()
     for checkbox in hobbies_checkbox():
