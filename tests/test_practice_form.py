@@ -28,17 +28,14 @@ filepath = 'photo.jpg'
 def gender_button():
     if gender.lower() == 'male':
         gender_button = '#gender-radio-1'
-        return gender_button
     elif gender.lower() == 'female':
         gender_button = '#gender-radio-2'
-        return gender_button
     elif gender.lower() == 'other':
         gender_button = '#gender-radio-3'
-        return gender_button
     # чтобы не сломать тест, если неверно введён пол
     else:
         gender_button = '#gender-radio-1'
-        return gender_button
+    return gender_button
 
 
 def hobbies_checkbox():
