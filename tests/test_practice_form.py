@@ -1,7 +1,6 @@
 import os
-
 from selene.support.shared import browser
-from selene import be
+from selene import be, have
 
 name = 'Anthony'
 surname = 'Kononov'
@@ -14,10 +13,10 @@ day = '17'
 year = '1995'
 subjects = ['Math', 'Chemistry']
 hobbies = ['Sports', 'rEaDiNG']  # Sports/Reading/Music
+picture = 'photo.jpg'
 address = 'bigadress a lot of letters inside string'
-state = 'Haryana'
-city = 'Karnal'
-filepath = 'photo.jpg'
+state = 'HaryAna'
+city = 'KarnaL'
 # В идеале сделать самоопределение штата, при выборе корректного города
 #     [{'state': 'NCR', 'city': ['Delhi', 'Guargon', 'Noida']},
 #     {'state': 'Uttar Pradesh', 'city': ['Agra', 'Lucknow', 'Merrut']},
@@ -32,9 +31,6 @@ def gender_button():
         gender_button = '#gender-radio-2'
     elif gender.lower() == 'other':
         gender_button = '#gender-radio-3'
-    # чтобы не сломать тест, если неверно введён пол
-    else:
-        gender_button = '#gender-radio-1'
     return gender_button
 
 
@@ -60,7 +56,7 @@ def test_fill_successful_form():
     browser.element('#userNumber').should(be.blank).type(phone_number)
 
     # воркэраунд, описанный при выполнении дз со(*) на первом уроке.
-    # симуляция нажатия по полю, выделение всего содержимого (ctrl+a), очистка (backspace)
+    # симуляция нажатия по полю, выделение всего содержимого (ctrl+a), ввод даты
     # browser.element('#dateOfBirthInput').send_keys(Keys.CONTROL, 'a').type('28 Mar 1995').press_enter()
 
     # через JS, думаю тоже можно довести до ума, чтобы дата не откатывалась к значению по умолчанию
@@ -71,7 +67,7 @@ def test_fill_successful_form():
     # Требуется доработка, для дней рождения 1,2,3 чисел (st, nd, rd)
     browser.element(f'[aria-label$="{month} {day}th, {year}"]').click()
 
-    browser.element('#uploadPicture').send_keys(os.getcwd()+f'./{filepath}')
+    browser.element('#uploadPicture').send_keys(os.getcwd()+f'./{picture}')
     for subject in subjects:
         browser.element('#subjectsInput').click().type(f'{subject}').press_enter()
     for checkbox in hobbies_checkbox():
@@ -80,3 +76,21 @@ def test_fill_successful_form():
     browser.element('#react-select-3-input').should(be.blank).type(state).press_enter()
     browser.element('#react-select-4-input').should(be.blank).type(city).press_enter()
     browser.execute_script('document.getElementById("submit").click()')
+
+    # Проверка формы:
+    # Обернуть бы модуль проверок лаконично, красиво, и чтобы понятно было где валится. Пока слишком деревянно
+    browser.all('.table-responsive').should(have.text(f'{name}'))
+    browser.all('.table-responsive').should(have.text(f'{surname}'))
+    browser.all('.table-responsive').should(have.text(f'{mail}'))
+    browser.all('.table-responsive').should(have.text(f'{gender.lower().capitalize()}'))
+    browser.all('.table-responsive').should(have.text(f'{phone_number}'))
+    browser.all('.table-responsive').should(have.text(f'{day} {month},{year}'))
+    for subject in subjects:
+        browser.all('.table-responsive').should(have.text(f'{subject.lower().capitalize()}'))
+    for hobby in hobbies:
+        browser.all('.table-responsive').should(have.text(f'{hobby.lower().capitalize()}'))
+    browser.all('.table-responsive').should(have.text(f'{picture}'))
+    browser.all('.table-responsive').should(have.text(f'{address}'))
+    browser.all('.table-responsive').should(have.text(f'{state.lower().capitalize()}'))
+    browser.all('.table-responsive').should(have.text(f'{city.lower().capitalize()}'))
+
