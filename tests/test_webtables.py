@@ -1,5 +1,5 @@
 from selene.support.shared import browser
-from selene import be
+from selene import be, have
 
 name = 'Anthony'
 surname = 'Kononov'
@@ -20,9 +20,13 @@ def fill_the_form():
 
 
 def test_add_row():
+    browser.config.hold_browser_open = True
     browser.open('https://demoqa.com/webtables')
     browser.element('#addNewRecordButton').click()
     fill_the_form()
+
+    # Проверочки
+    browser.all('.rt-tr-group')[3].all('.rt-td').should(have.texts(name, surname, age, mail, salary, department, ''))
 
 
 def test_edit_row():
@@ -30,7 +34,14 @@ def test_edit_row():
     browser.element('#edit-record-2').click()
     fill_the_form()
 
+    # Проверочки
+    browser.all('.rt-tr-group')[1].all('.rt-td').should(have.texts(name, surname, age, mail, salary, department, ''))
+
 
 def test_delete_row():
     browser.open('https://demoqa.com/webtables')
     browser.element('#delete-record-1').click()
+
+    # Проверочки
+    browser.all('.rt-tr-group')[0].all('.rt-td').should(have.no.texts('Cierra', 'Vega', '39', 'cierra@example.com',
+                                                                      '10000', 'Insurance', ''))
