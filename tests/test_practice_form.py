@@ -5,7 +5,7 @@ from selene import be, have
 name = 'Anthony'
 surname = 'Kononov'
 mail = 'mail@mail.com'
-gender = 'Male'  # Male/Female/Other
+gender = 'feMale'  # Male/Female/Other
 phone_number = '0123456789'  # must be 10-digit
 # birthday = {'day': '28', 'month': 'March', 'Year': '1995'}
 month = 'March'
@@ -17,12 +17,13 @@ picture = 'photo.jpg'
 address = 'bigadress a lot of letters inside string'
 state = 'HaryAna'
 city = 'KarnaL'
+'''
 # В идеале сделать самоопределение штата, при выборе корректного города
 #     [{'state': 'NCR', 'city': ['Delhi', 'Guargon', 'Noida']},
 #     {'state': 'Uttar Pradesh', 'city': ['Agra', 'Lucknow', 'Merrut']},
 #     {'state': 'Haryana', 'city': ['Karnal', 'Panipat']},
 #     {'state': 'Rajasthan', 'city': ['Jaipur', 'Jaiselmer']}]
-
+'''
 
 def gender_button():
     if gender.lower() == 'male':
@@ -54,19 +55,18 @@ def test_fill_successful_form():
     browser.element('#userEmail').should(be.blank).type(mail)
     browser.element(gender_button()).parent_element.click()
     browser.element('#userNumber').should(be.blank).type(phone_number)
-
-    # воркэраунд, описанный при выполнении дз со(*) на первом уроке.
-    # симуляция нажатия по полю, выделение всего содержимого (ctrl+a), ввод даты
-    # browser.element('#dateOfBirthInput').send_keys(Keys.CONTROL, 'a').type('28 Mar 1995').press_enter()
-
-    # через JS, думаю тоже можно довести до ума, чтобы дата не откатывалась к значению по умолчанию
-    # browser.execute_script(f"document.getElementById('dateOfBirthInput').value = '{birthday}'")
     browser.element('#dateOfBirthInput').click()
     browser.element('.react-datepicker__month-select').type(month)
     browser.element('.react-datepicker__year-select').type(year)
-    # Требуется доработка, для дней рождения 1,2,3 чисел (st, nd, rd)
-    browser.element(f'[aria-label$="{month} {day}th, {year}"]').click()
-
+    browser.element(f'[aria-label*="{month} {day}"][aria-label$="{year}"]').click()
+    ''' 
+        Рабочий
+        # симуляция нажатия по полю, выделение всего содержимого (ctrl+a), ввод даты
+        # browser.element('#dateOfBirthInput').send_keys(Keys.CONTROL, 'a').type(f'{day} {month} {year}').press_enter()
+        Недопиленный
+        # через JS, думаю тоже можно довести до ума, чтобы дата не откатывалась к значению по умолчанию
+        # browser.execute_script(f"document.getElementById('dateOfBirthInput').value = '{birthday}'")
+    '''
     browser.element('#uploadPicture').send_keys(os.getcwd()+f'./{picture}')
     for subject in subjects:
         browser.element('#subjectsInput').click().type(f'{subject}').press_enter()
