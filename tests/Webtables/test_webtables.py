@@ -20,8 +20,8 @@ def fill_the_form():
 
 
 def test_add_row():
-    browser.config.hold_browser_open = True
-    browser.open('https://demoqa.com/webtables')
+    # browser.config.hold_browser_open = True
+    browser.open_url('/webtables')
     browser.element('#addNewRecordButton').click()
     fill_the_form()
 
@@ -30,7 +30,7 @@ def test_add_row():
 
 
 def test_edit_row():
-    browser.open('https://demoqa.com/webtables')
+    browser.open_url('/webtables')
     browser.element('#edit-record-2').click()
     fill_the_form()
 
@@ -39,7 +39,7 @@ def test_edit_row():
 
 
 def test_delete_row():
-    browser.open('https://demoqa.com/webtables')
+    browser.open_url('/webtables')
     browser.element('#delete-record-1').click()
 
     # Проверочки
