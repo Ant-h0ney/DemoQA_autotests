@@ -1,7 +1,4 @@
 import model.general
-import model.general.datepicker
-import model.general.subject
-import model.general.submit
 from model.pages import practice_form
 from data import User
 
