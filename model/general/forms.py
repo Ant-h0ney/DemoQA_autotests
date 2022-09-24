@@ -1,4 +1,6 @@
 import os
+import platform
+
 from selene import command
 from selene.support.shared import browser
 from selenium.webdriver import Keys
@@ -29,9 +31,14 @@ def choose_birthdate_by_clicking(birthdate: dict):
 
 
 def choose_birthdate_by_typing(birthdate: dict):
-    browser.element('#dateOfBirthInput').send_keys(Keys.CONTROL, 'a').type(
-        f'{birthdate["day"]} {birthdate["month"]} {birthdate["year"]}'
-    ).press_enter()
+    if platform.system() == 'Windows':
+        browser.element('#dateOfBirthInput').send_keys(Keys.CONTROL, 'a').type(
+            f'{birthdate["day"]} {birthdate["month"]} {birthdate["year"]}'
+        ).press_enter()
+    else:
+        browser.element('#dateOfBirthInput').send_keys(Keys.COMMAND, 'a').type(
+            f'{birthdate["day"]} {birthdate["month"]} {birthdate["year"]}'
+        ).press_enter()
 
 
 def fill_name(name: str):
