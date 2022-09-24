@@ -9,3 +9,8 @@ def browser_preparation():
     browser.config.window_height = 800
     browser.config.base_url = 'https://demoqa.com'
     yield
+
+
+@pytest.fixture(autouse=True)
+def change_test_dir(request, monkeypatch):
+    monkeypatch.chdir(request.fspath.dirname)

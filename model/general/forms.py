@@ -1,28 +1,37 @@
+import os
+from selene import command
 from selene.support.shared import browser
 from selenium.webdriver import Keys
 
 
-def upload_picture(picture_path):
+def upload_picture(picture):
+    working_dir_path = os.path.abspath('')
+    picture_path = os.path.join(working_dir_path, picture)
     browser.element('#uploadPicture').send_keys(picture_path)
 
 
 def click_on_submit():
-    browser.execute_script('document.getElementById("submit").click()')
+    # browser.execute_script('document.getElementById("submit").click()')
+    browser.element('#submit').perform(command.js.click)
 
 
 def fill_address(address: str):
     browser.element('#currentAddress').type(address)
 
 
-def choose_birthdate_by_clicking(day, month, year):
+def choose_birthdate_by_clicking(birthdate: dict):
     browser.element('#dateOfBirthInput').click()
-    browser.element('.react-datepicker__month-select').type(month)
-    browser.element('.react-datepicker__year-select').type(year)
-    browser.element(f'[aria-label*="{month} {day}"][aria-label$="{year}"]').click()
+    browser.element('.react-datepicker__month-select').type(birthdate['month'])
+    browser.element('.react-datepicker__year-select').type(birthdate['year'])
+    browser.element(
+        f'[aria-label*="{birthdate["month"]} {birthdate["day"]}"][aria-label$="{birthdate["year"]}"]'
+    ).click()
 
 
-def choose_birthdate_by_typing(day, month, year):
-    browser.element('#dateOfBirthInput').send_keys(Keys.CONTROL, 'a').type(f'{day} {month} {year}').press_enter()
+def choose_birthdate_by_typing(birthdate: dict):
+    browser.element('#dateOfBirthInput').send_keys(Keys.CONTROL, 'a').type(
+        f'{birthdate["day"]} {birthdate["month"]} {birthdate["year"]}'
+    ).press_enter()
 
 
 def fill_name(name: str):

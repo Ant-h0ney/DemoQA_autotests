@@ -1,8 +1,12 @@
+from selene import have, command
 from selene.support.shared import browser
 
 
 def open_page():
     browser.open_url('/automation-practice-form')
+    ads = browser.all('[id^=google_ads][id*=container]')
+    if ads.with_(timeout=10).wait.until(have.size_greater_than_or_equal(3)):
+        ads.perform(command.js.remove)
 
 
 def click_gender_radio(gender: str):
@@ -40,3 +44,17 @@ def set_city_by_clicking(city):
     browser.element('[id^="react-select-4-option"]').click()
 
 
+def check_the_table(*args, **kwargs):
+    for value in args:
+        if type(value) == str:
+            browser.all('.table-responsive').should(have.text(f'{value}'))
+        if type(value) == tuple:
+            for elem in value:
+                browser.all('.table-responsive').should(have.text(f'{elem}'))
+        if type(value) == dict:
+            browser.all('.table-responsive') \
+                .should(have.text(f'{value["day"]} {value["month"]},{value["year"]}'))
+    # непойму, почему через кваргу не получается
+    # for birthdate in kwargs:
+    #     browser.all('.table-responsive')\
+    #         .should(have.text(f'{birthdate[0]} {birthdate[1]},{birthdate[2]}'))
