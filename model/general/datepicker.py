@@ -4,7 +4,7 @@ from selene.support.shared import browser
 from selenium.webdriver import Keys
 
 
-def set_by_click(birthdate: dict):
+def click_birthdate(birthdate: dict):
     browser.element('#dateOfBirthInput').click()
     browser.element('.react-datepicker__month-select').type(birthdate['month'])
     browser.element('.react-datepicker__year-select').type(birthdate['year'])
@@ -13,7 +13,7 @@ def set_by_click(birthdate: dict):
     ).click()
 
 
-def set_by_type(birthdate: dict):
+def type_birthdate(birthdate: dict):
     if platform.system() == 'Windows':
         browser.element('#dateOfBirthInput').send_keys(Keys.CONTROL, 'a').type(
             f'{birthdate["day"]} {birthdate["month"]} {birthdate["year"]}'

@@ -1,30 +1,29 @@
-import model.general
-from model.pages import practice_form
+import model
 from data import User
 
 
 def test_fill_successful_form():
-    practice_form.open_page()
+    model.pages.practice_form.open_page()
     model.general.forms.fill_name(User.name)
     model.general.forms.fill_surname(User.surname)
     model.general.forms.fill_email(User.mail)
-    practice_form.click_gender_radio(User.gender)
+    model.pages.practice_form.choose_gender(User.gender)
     model.general.forms.fill_phone_number(User.phone_number)
-    model.general.datepicker.set_by_type(User.birthday)
-    # model.general.datepicker.set_by_click(User.birthday)
+    model.general.datepicker.type_birthdate(User.birthday)
+    # model.general.datepicker.click_birthdate(User.birthday)
     model.general.subject.set_by_typing(User.subjects)
     # model.general.subject.set_by_clicking(User.subjects)
-    practice_form.set_hobbies(User.hobbies)
+    model.pages.practice_form.choose_hobby(User.hobbies)
     model.general.upload.picture(User.picture)
     model.general.forms.fill_address(User.address)
-    practice_form.set_state_by_typing(User.state)
-    # practice_form.set_state_by_clicking(User.state)
-    practice_form.set_city_by_typing(User.city)
-    # practice_form.set_city_by_clicking(User.city)
-    model.general.submit.click()
+    model.pages.practice_form.type_state(User.state)
+    # model.pages.practice_form.click_state(User.state)
+    model.pages.practice_form.type_city(User.city)
+    # model.pages.practice_form.click_city(User.city)
+    model.general.submit.js_click()
 
     # Проверка формы:
-    practice_form.check_the_table(
+    model.pages.practice_form.check_the_table(
         User.name,
         User.surname,
         User.mail,
