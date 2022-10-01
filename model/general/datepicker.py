@@ -1,9 +1,11 @@
 import platform
+import allure
 
 from selene.support.shared import browser
 from selenium.webdriver import Keys
 
 
+@allure.step('Set birthdate {birthdate}')
 def click_birthdate(birthdate: dict):
     browser.element('#dateOfBirthInput').click()
     browser.element('.react-datepicker__month-select').type(birthdate['month'])
@@ -13,6 +15,7 @@ def click_birthdate(birthdate: dict):
     ).click()
 
 
+@allure.step('Set birthdate {birthdate}')
 def type_birthdate(birthdate: dict):
     if platform.system() == 'Windows':
         browser.element('#dateOfBirthInput').send_keys(Keys.CONTROL, 'a').type(

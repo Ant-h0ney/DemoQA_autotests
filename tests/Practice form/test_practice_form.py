@@ -3,7 +3,7 @@ from data import User
 
 
 def test_fill_successful_form():
-    model.pages.practice_form.open_page()
+    model.pages.practice_form.open_page('/automation-practice-form')
     model.general.forms.fill_name(User.name)
     model.general.forms.fill_surname(User.surname)
     model.general.forms.fill_email(User.mail)
