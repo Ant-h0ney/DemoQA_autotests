@@ -37,3 +37,6 @@ def test_fill_successful_form():
         User.state,
         User.city,
     )
+    model.utils.allure.attach.screenshot()
+    model.utils.allure.attach.logs()
+    model.utils.allure.attach.html()
