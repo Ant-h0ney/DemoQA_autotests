@@ -3,11 +3,11 @@ from selene import have, command
 from selene.support.shared import browser
 
 
-@allure.step('Open an url from mainpage {url}')
-def open_page(url):
-    browser.open_url(url)
+@allure.step('Open an url from mainpage "/automation-practice-form"')
+def open_and_clear_ads():
+    browser.open_url('/automation-practice-form')
     ads = browser.all('[id^=google_ads][id*=container]')
-    if ads.with_(timeout=10).wait.until(have.size_greater_than_or_equal(3)):
+    if ads.with_(timeout=6).wait.until(have.size_greater_than_or_equal(3)):
         ads.perform(command.js.remove)
 
 
