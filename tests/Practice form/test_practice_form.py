@@ -2,8 +2,8 @@ import model
 from data import User
 
 
-def test_fill_successful_form():
-    model.pages.practice_form.open_page('/automation-practice-form')
+def test_fill_successful_form(browser_preparation_local):
+    model.pages.practice_form.open_and_clear_ads()
     model.general.forms.fill_name(User.name)
     model.general.forms.fill_surname(User.surname)
     model.general.forms.fill_email(User.mail)
@@ -37,6 +37,3 @@ def test_fill_successful_form():
         User.state,
         User.city,
     )
-    model.utils.allure.attach.screenshot()
-    model.utils.allure.attach.logs()
-    model.utils.allure.attach.html()

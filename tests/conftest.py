@@ -1,16 +1,28 @@
-import allure
 import pytest
-from allure_commons.types import AttachmentType
 from selene.support.shared import browser
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+import model
 
 
-@pytest.fixture(scope='function', autouse=True)
-def browser_preparation():
+# def pytest_add_addoption(parser):
+#     parser.addoption()
+
+
+@pytest.fixture(
+    # scope='function', autouse=True
+)
+def browser_preparation_local(attachments):
     browser.config.browser_name = 'chrome'
-    browser.config.window_width = 1000
-    browser.config.window_height = 800
+    browser.config.window_width = 1200
+    browser.config.window_height = 1000
     browser.config.base_url = 'https://demoqa.com'
     yield
+    model.utils.allure.attach.screenshot()
+    model.utils.allure.attach.logs()
+    model.utils.allure.attach.html()
+    browser.quit()
 
 
 @pytest.fixture(autouse=True)
@@ -19,38 +31,39 @@ def change_test_dir(request, monkeypatch):
     yield
 
 
-''' It deserve to exist. But must be improved (cuz a lot of lines at Allure)
-@pytest.fixture(autouse=True)
-def screenshot():
+@pytest.fixture(scope='function')
+def browser_preparation_selenoid(attachments):
+    options = Options()
+    selenoid_capabilities = {
+        'browserName': 'chrome',
+        'browserVersion': '100.0',
+        'selenoid:options': {'enableVNC': True, 'enableVideo': True},
+    }
+    options.capabilities.update(selenoid_capabilities)
+    driver = webdriver.Remote(
+        command_executor='https://user1:1234@selenoid.autotests.cloud/wd/hub',
+        options=options,
+    )
+    browser.config.driver = driver
+    browser.config.browser_name = 'chrome'
+    browser.config.window_width = 1200
+    browser.config.window_height = 1000
+    browser.config.base_url = 'https://demoqa.com'
     yield
-    screen = browser.driver.get_screenshot_as_png()
-    allure.attach(
-        screen,
-        name='screenshot',
-        attachment_type=AttachmentType.PNG,
-    )
+    model.utils.allure.attach.screenshot()
+    model.utils.allure.attach.logs()
+    model.utils.allure.attach.html()
+    model.utils.allure.attach.video()
+
+    browser.quit()
 
 
-@pytest.fixture(autouse=True)
-def logs():
-    yield
-    logfile = ''.join(
-        f'{text}\n' for text in browser.driver.get_log(log_type='browser')
-    )
-    allure.attach(
-        logfile,
-        name='browser_log',
-        attachment_type=AttachmentType.TEXT,
-    )
-
-
-@pytest.fixture(autouse=True)
-def html():
-    yield
-    source = browser.driver.page_source
-    allure.attach(
-        source,
-        name='HTML',
-        attachment_type=AttachmentType.HTML,
-    )
-'''
+# @pytest.fixture(scope='function')
+# def attachments():
+#     yield
+#     model.utils.allure.attach.screenshot()
+#     model.utils.allure.attach.logs()
+#     model.utils.allure.attach.html()
+#     selenoid_driver = webdriver.Remote()
+#     if browser.config.driver == selenoid_driver:
+#         model.utils.allure.attach.video()
