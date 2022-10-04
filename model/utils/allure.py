@@ -33,5 +33,16 @@ class Attach:
             attachment_type=AttachmentType.HTML,
         )
 
+    @staticmethod
+    def video():
+        video_url = 'https://selenoid.autotests.cloud/video/' + browser.driver.session_id + '.mp4'
+        html = "<html><body><video width='100%' height='100%' controls autoplay><source src='" + video_url \
+               + "' type='video/mp4'></video></body></html>"
+        allure.attach(
+            html,
+            name='video_' + browser.driver.session_id,
+            attachment_type=AttachmentType.HTML,
+        )
+
 
 attach = Attach()
