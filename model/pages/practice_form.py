@@ -52,8 +52,8 @@ def click_city(city):
     browser.element('[id^="react-select-4-option"]').click()
 
 
-@allure.step('Validate responsive table {args}')
-def check_the_table(*args, **kwargs):
+@allure.step('Validate responsive data {args}')
+def check_data_in_response(*args):
     for value in args:
         if type(value) == str:
             browser.all('.table-responsive').should(have.text(f'{value}'))
@@ -64,7 +64,3 @@ def check_the_table(*args, **kwargs):
             browser.all('.table-responsive').should(
                 have.text(f'{value["day"]} {value["month"]},{value["year"]}')
             )
-    # непойму, почему через кваргу не получается
-    # for birthdate in kwargs:
-    #     browser.all('.table-responsive')\
-    #         .should(have.text(f'{birthdate[0]} {birthdate[1]},{birthdate[2]}'))

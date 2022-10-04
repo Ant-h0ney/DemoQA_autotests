@@ -23,7 +23,7 @@ def test_fill_successful_form(browser_preparation_local):
     model.general.submit.js_click()
 
     # Проверка формы:
-    model.pages.practice_form.check_the_table(
+    model.pages.practice_form.check_data_in_response(
         User.name,
         User.surname,
         User.mail,
