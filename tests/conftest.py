@@ -4,7 +4,7 @@ from selene.support.shared import browser
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-import model
+# import model
 
 
 # def pytest_add_addoption(parser):
@@ -20,9 +20,9 @@ def browser_preparation_local():
     browser.config.window_height = 1000
     browser.config.base_url = 'https://demoqa.com'
     yield
-    model.utils.allure.attach.screenshot()
-    model.utils.allure.attach.logs()
-    model.utils.allure.attach.html()
+    # model.utils.allure.attach.screenshot()
+    # model.utils.allure.attach.logs()
+    # model.utils.allure.attach.html()
     browser.quit()
 
 
@@ -52,10 +52,10 @@ def browser_preparation_selenoid():
     browser.config.window_height = 1000
     browser.config.base_url = 'https://demoqa.com'
     yield
-    model.utils.allure.attach.screenshot()
-    model.utils.allure.attach.logs()
-    model.utils.allure.attach.html()
-    model.utils.allure.attach.video()
+    # model.utils.allure.attach.screenshot()
+    # model.utils.allure.attach.logs()
+    # model.utils.allure.attach.html()
+    # model.utils.allure.attach.video()
 
     browser.quit()
 
