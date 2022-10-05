@@ -1,4 +1,5 @@
 import pytest
+from selene import Browser, Config
 from selene.support.shared import browser
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -13,7 +14,7 @@ import model
 @pytest.fixture(
     # scope='function', autouse=True
 )
-def browser_preparation_local(attachments):
+def browser_preparation_local():
     browser.config.browser_name = 'chrome'
     browser.config.window_width = 1200
     browser.config.window_height = 1000
@@ -32,7 +33,7 @@ def change_test_dir(request, monkeypatch):
 
 
 @pytest.fixture(scope='function')
-def browser_preparation_selenoid(attachments):
+def browser_preparation_selenoid():
     options = Options()
     selenoid_capabilities = {
         'browserName': 'chrome',
@@ -44,6 +45,7 @@ def browser_preparation_selenoid(attachments):
         command_executor='https://user1:1234@selenoid.autotests.cloud/wd/hub',
         options=options,
     )
+    # browser = Browser(Config(driver))
     browser.config.driver = driver
     browser.config.browser_name = 'chrome'
     browser.config.window_width = 1200
