@@ -17,7 +17,7 @@ def click_birthdate(birthdate: dict):
 
 @allure.step('Set birthdate {birthdate}')
 def type_birthdate(birthdate: dict):
-    if platform.system() == 'Windows':
+    if platform.system() == 'Windows' or platform.system() == 'Linux':
         browser.element('#dateOfBirthInput').send_keys(Keys.CONTROL, 'a').type(
             f'{birthdate["day"]} {birthdate["month"]} {birthdate["year"]}'
         ).press_enter()
