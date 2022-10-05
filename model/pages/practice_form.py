@@ -15,7 +15,7 @@ def open_and_clear_ads():
 def choose_gender(gender: str):
     gender_lowcap = gender.lower().capitalize()
     gender_element = f'[id^="gender"][value="{gender_lowcap}"]'
-    browser.element(gender_element).parent_element.click()
+    browser.element(gender_element).element('..').click()
 
 
 @allure.step('Click on checkboxes of hobby {hobbies}')
@@ -27,7 +27,7 @@ def choose_hobby(hobbies: tuple):
         hobby_id = hobby_css[hobby]
         hobby_list.append(f'[id^="hobbies"][id$="{hobby_id}"]')
     for checkbox in hobby_list:
-        browser.element(checkbox).parent_element.click()
+        browser.element(checkbox).element('..').click()
 
 
 @allure.step('Set state {state}')
