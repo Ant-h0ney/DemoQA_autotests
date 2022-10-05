@@ -2,7 +2,7 @@ import model
 from data import User
 
 
-def test_fill_successful_form(browser_preparation_selenoid):
+def test_fill_successful_form():
     model.pages.practice_form.open_and_clear_ads()
     model.general.forms.fill_name(User.name)
     model.general.forms.fill_surname(User.surname)
