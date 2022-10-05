@@ -20,8 +20,8 @@ def browser_preparation(attachments):
     browser.config.base_url = 'https://demoqa.com'
     if platform.system() != 'Windows':
         load_dotenv()
-        login = os.getenv('login')
-        password = os.getenv('password')
+        login = os.getenv('LOGIN')
+        password = os.getenv('PASSWORD')
         options = Options()
         selenoid_capabilities = {
             'browserName': 'chrome',
