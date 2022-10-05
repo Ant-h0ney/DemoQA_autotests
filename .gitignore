@@ -2,3 +2,4 @@
 .venv
 allure-results/
 __pycache__/
+/.env

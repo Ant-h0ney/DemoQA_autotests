@@ -1,10 +1,10 @@
+import os
 import platform
-
 import pytest
 from selene.support.shared import browser
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-
+from dotenv import load_dotenv
 import model
 
 
@@ -19,6 +19,9 @@ def browser_preparation(attachments):
     browser.config.window_height = 1000
     browser.config.base_url = 'https://demoqa.com'
     if platform.system() != 'Windows':
+        load_dotenv()
+        login = os.getenv('login')
+        password = os.getenv('password')
         options = Options()
         selenoid_capabilities = {
             'browserName': 'chrome',
@@ -27,7 +30,7 @@ def browser_preparation(attachments):
         }
         options.capabilities.update(selenoid_capabilities)
         driver = webdriver.Remote(
-            command_executor='https://user1:1234@selenoid.autotests.cloud/wd/hub',
+            command_executor=f'https://{login}:{password}@selenoid.autotests.cloud/wd/hub',
             options=options,
         )
         browser.config.driver = driver
