@@ -13,14 +13,12 @@ import model
 
 
 @pytest.fixture(scope='function', autouse=True)
-def browser_preparation_local(attachments):
+def browser_preparation(attachments):
     browser.config.browser_name = 'chrome'
     browser.config.window_width = 1200
     browser.config.window_height = 1000
     browser.config.base_url = 'https://demoqa.com'
-    if platform.system() == 'Windows':
-        yield
-    else:
+    if platform.system() != 'Windows':
         options = Options()
         selenoid_capabilities = {
             'browserName': 'chrome',
@@ -33,7 +31,7 @@ def browser_preparation_local(attachments):
             options=options,
         )
         browser.config.driver = driver
-        yield
+    yield
 
 
 @pytest.fixture(autouse=True)
