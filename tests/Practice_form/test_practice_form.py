@@ -17,16 +17,16 @@ def test_fill_successful_form():
         practice_form.fill_phone_number(User.phone_number)
         practice_form.type_birthdate(User.birthday)
         # practice_form.click_birthdate(User.birthday)
-        practice_form.set_by_typing(User.subjects)
-        # practice_form.set_by_clicking(User.subjects)
+        practice_form.type_subjects(User.subjects)
+        # practice_form.click_subjects(User.subjects)
         practice_form.choose_hobby(User.hobbies)
-        practice_form.picture(User.picture)
+        practice_form.upload_picture(User.picture)
         practice_form.fill_address(User.address)
         practice_form.type_state(User.state)
         # practice_form.click_state(User.state)
         practice_form.type_city(User.city)
         # practice_form.click_city(User.city)
-    practice_form.js_click()
+    practice_form.js_click_submit()
 
     # Проверка формы:
     practice_form.check_data_in_response(

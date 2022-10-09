@@ -6,7 +6,7 @@ from selene import have, command
 from selene.support.shared import browser
 from selenium.webdriver import Keys
 
-from model.general import radio, checkbox, dropdown
+from model.general import radio, checkbox, dropdown, datepicker, upload
 from tests.Practice_form.data import User
 
 
@@ -49,20 +49,6 @@ def click_city(city: str, dropdown_city=4):
     dropdown.select(dropdown_city, city)
 
 
-@allure.step('Validate responsive data {args}')
-def check_data_in_response(*args):
-    for value in args:
-        if type(value) == str:
-            browser.all('.table-responsive').should(have.text(f'{value}'))
-        if type(value) == tuple:
-            for elem in value:
-                browser.all('.table-responsive').should(have.text(f'{elem}'))
-        if type(value) == dict:
-            browser.all('.table-responsive').should(
-                have.text(f'{value["day"]} {value["month"]},{value["year"]}')
-            )
-
-
 @allure.step('Set address {address}')
 def fill_address(address: str):
     browser.element('#currentAddress').type(address)
@@ -90,46 +76,46 @@ def fill_phone_number(phone_number):
 
 @allure.step('Set birthdate {birthdate}')
 def click_birthdate(birthdate: dict):
-    browser.element('#dateOfBirthInput').click()
-    browser.element('.react-datepicker__month-select').set(birthdate['month'])
-    browser.element('.react-datepicker__year-select').set(birthdate['year'])
-    browser.element(
-        f'[aria-label*="{birthdate["month"]} {birthdate["day"]}"][aria-label$="{birthdate["year"]}"]'
-    ).click()
+    datepicker.choose(birthdate)
 
 
 @allure.step('Set birthdate {birthdate}')
 def type_birthdate(birthdate: dict):
-    if platform.system() == 'Windows' or platform.system() == 'Linux':
-        os_key = Keys.CONTROL
-    else:
-        os_key = Keys.COMMAND
-    browser.element('#dateOfBirthInput').send_keys(os_key, 'a').type(
-        f'{birthdate["day"]} {birthdate["month"]} {birthdate["year"]}'
-    ).press_enter()
+    datepicker.type(birthdate)
 
 
 @allure.step('Set subjects {subjects}')
-def set_by_typing(subjects: tuple):
+def type_subjects(subjects: tuple):
     for subject in subjects:
         browser.element('#subjectsInput').click().type(f'{subject}').press_enter()
 
 
 @allure.step('Set subjects {subjects}')
-def set_by_clicking(subjects: tuple):
+def click_subjects(subjects: tuple):
     for subject in subjects:
         browser.element('#subjectsInput').click().type(f'{subject}')
         browser.element('[id^="react-select-2"]').click()
 
 
 @allure.step('Upload a picture {filename}')
-def picture(filename):
-    working_dir_path = os.path.abspath('')
-    picture_path = os.path.join(working_dir_path, filename)
-    browser.element('#uploadPicture').send_keys(picture_path)
+def upload_picture(filename, type_of_file='Picture'):
+    upload.file(type_of_file, filename)
 
 
 @allure.step('Click on the submit button')
-def js_click():
-    # browser.execute_script('document.getElementById("submit").click()')
+def js_click_submit():
     browser.element('#submit').perform(command.js.click)
+
+
+@allure.step('Validate responsive data {args}')
+def check_data_in_response(*args):
+    for value in args:
+        if type(value) == str:
+            browser.all('.table-responsive').should(have.text(f'{value}'))
+        if type(value) == tuple:
+            for elem in value:
+                browser.all('.table-responsive').should(have.text(f'{elem}'))
+        if type(value) == dict:
+            browser.all('.table-responsive').should(
+                have.text(f'{value["day"]} {value["month"]},{value["year"]}')
+            )
