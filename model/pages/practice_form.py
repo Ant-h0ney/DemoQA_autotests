@@ -7,6 +7,7 @@ from selene.support.shared import browser
 from selenium.webdriver import Keys
 
 from model.general import radio, checkbox
+from tests.Practice_form.data import User
 
 
 @allure.step('Open an url from mainpage "/automation-practice-form"')
@@ -18,23 +19,14 @@ def open_and_clear_ads():
 
 
 @allure.step('Click on gender button {gender}')
-def select_gender(sex: str, gender='gender'):
-    radio.select(gender, sex)
+def select_gender(gender: str, radio_name='gender'):
+    radio.select(radio_name, gender)
 
 
-@allure.step('Click on checkboxes of hobby {hobby}')
-def choose_hobby(hobby='Reading', name='hobbies'):
-    checkbox.select(name, hobby)
-    '''
-    hobby_list = []
-    hobby_css = {'sports': '1', 'reading': '2', 'music': '3'}
+@allure.step('Click on checkboxes of hobby {hobbies}')
+def choose_hobby(hobbies: User.hobbies, checkbox_name='hobbies'):
     for hobby in hobbies:
-        hobby: str = hobby.lower()
-        hobby_id = hobby_css[hobby]
-        hobby_list.append(f'[id^="hobbies"][id$="{hobby_id}"]')
-    for checkbox in hobby_list:
-        browser.element(checkbox).element('..').click()
-    '''
+        checkbox.select(checkbox_name, hobby)
 
 
 @allure.step('Set state {state}')

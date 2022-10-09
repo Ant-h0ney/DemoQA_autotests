@@ -19,7 +19,7 @@ def test_fill_successful_form():
         # practice_form.click_birthdate(User.birthday)
         practice_form.set_by_typing(User.subjects)
         # practice_form.set_by_clicking(User.subjects)
-        practice_form.choose_hobby()
+        practice_form.choose_hobby(User.hobbies)
         practice_form.picture(User.picture)
         practice_form.fill_address(User.address)
         practice_form.type_state(User.state)
