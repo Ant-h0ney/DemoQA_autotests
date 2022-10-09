@@ -6,7 +6,7 @@ from selene import have, command
 from selene.support.shared import browser
 from selenium.webdriver import Keys
 
-from model.general import radio, checkbox
+from model.general import radio, checkbox, dropdown
 from tests.Practice_form.data import User
 
 
@@ -30,25 +30,23 @@ def choose_hobby(hobbies: User.hobbies, checkbox_name='hobbies'):
 
 
 @allure.step('Set state {state}')
-def type_state(state: str):
-    browser.element('#react-select-3-input').type(state).press_enter()
+def type_state(state: str, dropdown_state='3'):
+    dropdown.type(dropdown_state, state)
 
 
 @allure.step('Set state {state}')
-def click_state(state: str):
-    browser.element('#react-select-3-input').type(state)
-    browser.element('[id^="react-select-3-option"]').click()
+def click_state(state: str, dropdown_state=3):
+    dropdown.select(dropdown_state, state)
 
 
 @allure.step('Set city {city}')
-def type_city(city):
-    browser.element('#react-select-4-input').type(city).press_enter()
+def type_city(city: str, dropdown_city=4):
+    dropdown.type(dropdown_city, city)
 
 
 @allure.step('Set city {city}')
-def click_city(city):
-    browser.element('#react-select-4-input').type(city)
-    browser.element('[id^="react-select-4-option"]').click()
+def click_city(city: str, dropdown_city=4):
+    dropdown.select(dropdown_city, city)
 
 
 @allure.step('Validate responsive data {args}')

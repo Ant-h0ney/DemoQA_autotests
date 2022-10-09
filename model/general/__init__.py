@@ -5,3 +5,4 @@ from . import datepicker
 from . import subject
 from . import radio
 from . import checkbox
+from . import dropdown
