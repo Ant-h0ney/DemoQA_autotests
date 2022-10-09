@@ -8,7 +8,7 @@ from tests.Practice_form.data import User
 
 @allure.step('Open an url from mainpage "/automation-practice-form"')
 def open_and_clear_ads():
-    browser.open_url('/automation-practice-form')
+    browser.open('/automation-practice-form')
     ads = browser.all('[id^=google_ads][id*=container]')
     if ads.with_(timeout=6).wait.until(have.size_greater_than_or_equal(3)):
         ads.perform(command.js.remove)
