@@ -51,4 +51,4 @@ def attachments():
     model.utils.allure.attach.html()
     if platform.system() != 'Windows':
         model.utils.allure.attach.video()
-    browser.quit()
+    # browser.quit()

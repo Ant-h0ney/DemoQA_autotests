@@ -1,10 +1,9 @@
 import os
-import allure
+
 from selene.support.shared import browser
 
 
-@allure.step('Upload a picture {filename}')
-def picture(filename):
+def file(type_of_file, filename):
     working_dir_path = os.path.abspath('')
-    picture_path = os.path.join(working_dir_path, filename)
-    browser.element('#uploadPicture').send_keys(picture_path)
+    file_path = os.path.join(working_dir_path, filename)
+    browser.element(f'#upload{type_of_file}').send_keys(file_path)
