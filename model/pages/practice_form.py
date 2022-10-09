@@ -1,10 +1,6 @@
-import os
-import platform
-
 import allure
 from selene import have, command
 from selene.support.shared import browser
-from selenium.webdriver import Keys
 
 from model.general import radio, checkbox, dropdown, datepicker, upload
 from tests.Practice_form.data import User
@@ -111,11 +107,12 @@ def js_click_submit():
 def check_data_in_response(*args):
     for value in args:
         if type(value) == str:
-            browser.all('.table-responsive').should(have.text(f'{value}'))
+            browser.element('.modal-content').all('table tbody tr').all('td').element_by(have.text(f'{value}')).should(have.text(f'{value}'))
         if type(value) == tuple:
             for elem in value:
-                browser.all('.table-responsive').should(have.text(f'{elem}'))
+                browser.element('.modal-content').all('table tbody tr').all('td').element_by(
+                    have.text(f'{elem}')).should(have.text(f'{elem}'))
         if type(value) == dict:
-            browser.all('.table-responsive').should(
+            browser.element('.modal-content').all('table tbody tr').all('td').element_by(
                 have.text(f'{value["day"]} {value["month"]},{value["year"]}')
-            )
+            ).should(have.text(f'{value["day"]} {value["month"]},{value["year"]}'))
