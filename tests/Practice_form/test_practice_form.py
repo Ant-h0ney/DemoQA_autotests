@@ -5,12 +5,12 @@ from model import app
 
 
 def test_stepobject():
-    browser.config.hold_browser_open = True
+    # browser.config.hold_browser_open = True
     app.sign_up.new_user()
 
 
 def test_fluent_pageobject():
-    browser.config.hold_browser_open = True
+    # browser.config.hold_browser_open = True
     (
         app.practice_form.open_and_clear_ads()
         .fill_name(User.name)
