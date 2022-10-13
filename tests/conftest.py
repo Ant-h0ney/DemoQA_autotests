@@ -8,10 +8,6 @@ from dotenv import load_dotenv
 import model
 
 
-# def pytest_add_addoption(parser):
-#     parser.addoption()
-
-
 @pytest.fixture(scope='function', autouse=True)
 def browser_preparation(attachments):
     browser.config.browser_name = 'chrome'
